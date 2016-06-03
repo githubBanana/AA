@@ -1,0 +1,66 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    signingConfigs {
+        testsingn {
+            keyAlias 'alias_zhoufu'
+            keyPassword 'zhoufu'
+            storeFile file('F:/work/myGithubProject/alias_zhoufu.jks')
+            storePassword 'zhoufu'
+        }
+    }
+    compileSdkVersion 'android-N'
+    buildToolsVersion '24.0.0 rc4'
+    defaultConfig {
+        applicationId "com.xs.aa"
+        minSdkVersion  'N'
+        targetSdkVersion  'N'
+
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.testsingn
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.testsingn
+        }
+    }
+    productFlavors {
+        okc {
+            // 显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            applicationId "com.xs.okc"
+            versionCode 4
+            versionName "1.0.4"
+        }
+        abcd {
+            // 显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            applicationId "com.xs.abcd"
+            versionCode 5
+            versionName "1.0.5"
+        }
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+repositories { flatDir { dirs 'libs' } }
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'io.reactivex:rxjava:1.1.5'
+    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    compile 'com.android.support:support-v4:24.0.0-beta1'
+}
